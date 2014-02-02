@@ -34,6 +34,8 @@ class TF_IDF:
         self.doc_word_sets.append(set(tokens))
 
     def show_summary(self):
+        sets = self.doc_word_sets
+        num_sets = len(sets)
         for i, doc in enumerate(self.original_docs):
             doc_len = self.doc_lengths[i]
             tf_idf = dict()
@@ -42,8 +44,7 @@ class TF_IDF:
                 if word in self.word_idfs:
                     idf = self.word_idfs[word]
                 else:
-                    sets = self.doc_word_sets
-                    idf = math.log(float(len(sets)) /
+                    idf = math.log(float(num_sets) /
                                    float(sum(1 for s in sets if word in s)))
                     self.word_idfs[word] = idf
                 tf_idf[word] = tf * idf
@@ -74,7 +75,6 @@ def main():
                 paragraph = []
         else:
             paragraph.append(line.rstrip())
-
     tfidf.show_summary()
 
 
